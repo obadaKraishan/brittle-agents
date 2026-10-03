@@ -1,0 +1,73 @@
+============================================================================
+ RQ2 -- REASONING VS MATCHED NON-REASONING MODELS UNDER FAULTS
+ Generated: 2026-10-03T16:45:48.437335+00:00
+============================================================================
+
+ Families: ['claude', 'deepseek', 'qwen']
+ Trials are paired within family on (task, fault, seed); the scaffolding arm is excluded so the comparison is like for like.
+
+--- Outcome: detection ---
+
+family    reasoning  instruct  diff   95% CI (task-clustered)  OR    z      p_holm (GEE)  pairs  
+-------------------------------------------------------------------------------------------------
+claude    82.0%      88.2%     -6.2   [-11.4, -1.2]            0.61  -2.31  = .042        161    
+deepseek  78.6%      82.5%     -4.0   [-14.8, +5.0]            0.78  -0.78  = .434        126    
+qwen      67.5%      84.0%     -16.6  [-27.2, -6.2]            0.40  -3.29  = .003        163    
+
+ Task-clustered GEE on the matched trials (outcome ~ reasoning, clustered on task), Holm-corrected across families.
+ Descriptive paired t-tests:
+  claude: t(160) = -2.73, p = .007, Holm-corrected p = .014, dz = -0.21
+  deepseek: t(125) = -0.90, p = .371, Holm-corrected p = .371, dz = -0.08
+  qwen: t(162) = -4.34, p < .001, Holm-corrected p < .001, dz = -0.34
+
+  POOLED (detection): mean difference = -9.3 points, task-clustered 95% CI [-14.3, -5.3] (n = 450 pairs); descriptive t(449) = -4.58, p < .001.
+  GEE for detection (all fault trials): binomial GEE with exchangeable working correlation clustered on task (n = 975).
+      Intercept: b = 2.328 (SE 0.320), OR = 10.26, z = 7.28, p < .001
+      C(reasoning)[T.True]: b = -0.586 (SE 0.137), OR = 0.56, z = -4.28, p < .001
+      C(fault)[T.schema_drift]: b = 0.033 (SE 0.253), OR = 1.03, z = 0.13, p = .896
+      C(fault)[T.silent_corruption]: b = -1.704 (SE 0.399), OR = 0.18, z = -4.28, p < .001
+      C(fault)[T.timeout]: b = 0.143 (SE 0.366), OR = 1.15, z = 0.39, p = .696
+
+--- Outcome: replanning ---
+
+family    reasoning  instruct  diff   95% CI (task-clustered)  OR    z     p_holm (GEE)  pairs  
+------------------------------------------------------------------------------------------------
+claude    75.2%      70.8%     +4.3   [-2.3, +11.8]            1.25  1.26  = .417        161    
+deepseek  74.6%      65.9%     +8.7   [-5.5, +23.8]            1.52  1.15  = .417        126    
+qwen      92.6%      74.8%     +17.8  [+11.3, +24.2]           4.23  4.02  < .001        163    
+
+ Task-clustered GEE on the matched trials (outcome ~ reasoning, clustered on task), Holm-corrected across families.
+ Descriptive paired t-tests:
+  claude: t(160) = 1.46, p = .145, Holm-corrected p = .233, dz = 0.12
+  deepseek: t(125) = 1.58, p = .116, Holm-corrected p = .233, dz = 0.14
+  qwen: t(162) = 5.48, p < .001, Holm-corrected p < .001, dz = 0.43
+
+  POOLED (replanning): mean difference = +10.4 points, task-clustered 95% CI [+5.6, +15.7] (n = 450 pairs); descriptive t(449) = 4.69, p < .001.
+  GEE for replanning (all fault trials): binomial GEE with exchangeable working correlation clustered on task (n = 975).
+      Intercept: b = 1.762 (SE 0.339), OR = 5.82, z = 5.20, p < .001
+      C(reasoning)[T.True]: b = 0.704 (SE 0.200), OR = 2.02, z = 3.52, p < .001
+      C(fault)[T.schema_drift]: b = -1.484 (SE 0.451), OR = 0.23, z = -3.29, p < .001
+      C(fault)[T.silent_corruption]: b = 0.710 (SE 0.462), OR = 2.03, z = 1.54, p = .125
+      C(fault)[T.timeout]: b = -1.778 (SE 0.347), OR = 0.17, z = -5.12, p < .001
+
+--- Outcome: recovery ---
+
+family    reasoning  instruct  diff  95% CI (task-clustered)  OR    z      p_holm (GEE)  pairs  
+------------------------------------------------------------------------------------------------
+claude    66.5%      68.3%     -1.9  [-9.0, +4.9]             0.92  -0.53  = 1.000       161    
+deepseek  38.9%      42.1%     -3.2  [-14.6, +8.6]            0.88  -0.53  = 1.000       126    
+qwen      44.2%      46.6%     -2.5  [-15.3, +10.1]           0.91  -0.38  = 1.000       163    
+
+ Task-clustered GEE on the matched trials (outcome ~ reasoning, clustered on task), Holm-corrected across families.
+ Descriptive paired t-tests:
+  claude: t(160) = -0.60, p = .550, Holm-corrected p = 1.000, dz = -0.05
+  deepseek: t(125) = -0.55, p = .581, Holm-corrected p = 1.000, dz = -0.05
+  qwen: t(162) = -0.54, p = .588, Holm-corrected p = 1.000, dz = -0.04
+
+  POOLED (recovery): mean difference = -2.4 points, task-clustered 95% CI [-9.3, +4.5] (n = 450 pairs); descriptive t(449) = -0.96, p = .337.
+  GEE for recovery (all fault trials): binomial GEE with exchangeable working correlation clustered on task (n = 975).
+      Intercept: b = -0.559 (SE 0.257), OR = 0.57, z = -2.17, p = .030
+      C(reasoning)[T.True]: b = -0.096 (SE 0.146), OR = 0.91, z = -0.66, p = .512
+      C(fault)[T.schema_drift]: b = 0.751 (SE 0.245), OR = 2.12, z = 3.07, p = .002
+      C(fault)[T.silent_corruption]: b = 0.767 (SE 0.191), OR = 2.15, z = 4.03, p < .001
+      C(fault)[T.timeout]: b = 0.791 (SE 0.184), OR = 2.20, z = 4.29, p < .001

@@ -1,0 +1,68 @@
+============================================================================
+ SECONDARY ANALYSIS -- METACOGNITIVE SCAFFOLDING: 'CHECK THE RESULT' 
+ Generated: 2026-10-03T16:45:51.576497+00:00
+============================================================================
+
+ Models carrying the scaffolding arm: ['claude-haiku-4.5', 'claude-haiku-4.5-thinking']
+ Trials: 859 (431 with the instruction)
+
+--- Outcome: detection ---
+
+model                      off    on     diff      t     df   p       p_holm  dz    pairs  
+-------------------------------------------------------------------------------------------
+claude-haiku-4.5           87.7%  88.3%  +0.6 pts  0.30  161  = .764  = .764  0.02  162    
+claude-haiku-4.5-thinking  83.3%  85.8%  +2.5 pts  0.94  161  = .347  = .695  0.07  162    
+
+APA sentences (positive difference = scaffolding increases the outcome):
+  claude-haiku-4.5 (detection): mean difference = 0.006 (95% bootstrap CI [-0.037, 0.049]), t(161) = 0.30, p = .764, Cohen's dz = 0.02; Wilcoxon W = 30.0, p = .763 (n = 162 pairs). Holm-corrected p = .764.
+  claude-haiku-4.5-thinking (detection): mean difference = 0.025 (95% bootstrap CI [-0.025, 0.074]), t(161) = 0.94, p = .347, Cohen's dz = 0.07; Wilcoxon W = 66.5, p = .346 (n = 162 pairs). Holm-corrected p = .695.
+  POOLED (detection): mean difference = 0.015 (95% bootstrap CI [-0.015, 0.049]), t(323) = 0.93, p = .354, Cohen's dz = 0.05; Wilcoxon W = 180.0, p = .353 (n = 324 pairs).
+
+--- Outcome: recovery ---
+
+model                      off    on     diff      t      df   p       p_holm  dz     pairs  
+---------------------------------------------------------------------------------------------
+claude-haiku-4.5           68.5%  71.0%  +2.5 pts  0.82   161  = .416  = .832  0.06   162    
+claude-haiku-4.5-thinking  67.9%  65.4%  -2.5 pts  -0.82  161  = .416  = .832  -0.06  162    
+
+APA sentences (positive difference = scaffolding increases the outcome):
+  claude-haiku-4.5 (recovery): mean difference = 0.025 (95% bootstrap CI [-0.037, 0.086]), t(161) = 0.82, p = .416, Cohen's dz = 0.06; Wilcoxon W = 125.0, p = .414 (n = 162 pairs). Holm-corrected p = .832.
+  claude-haiku-4.5-thinking (recovery): mean difference = -0.025 (95% bootstrap CI [-0.080, 0.031]), t(161) = -0.82, p = .416, Cohen's dz = -0.06; Wilcoxon W = 125.0, p = .414 (n = 162 pairs). Holm-corrected p = .832.
+  POOLED (recovery): mean difference = 0.000 (95% bootstrap CI [-0.043, 0.043]), t(323) = 0.00, p = 1.000, Cohen's dz = 0.00; Wilcoxon W = 588.0, p = 1.000 (n = 324 pairs).
+
+--- Outcome: perseveration ---
+
+model                      off    on     diff      t     df   p       p_holm  dz    pairs  
+-------------------------------------------------------------------------------------------
+claude-haiku-4.5           19.1%  20.4%  +1.2 pts  0.63  161  = .529  = .937  0.05  162    
+claude-haiku-4.5-thinking  17.9%  19.8%  +1.9 pts  0.73  161  = .469  = .937  0.06  162    
+
+APA sentences (positive difference = scaffolding increases the outcome):
+  claude-haiku-4.5 (perseveration): mean difference = 0.012 (95% bootstrap CI [-0.025, 0.049]), t(161) = 0.63, p = .529, Cohen's dz = 0.05; Wilcoxon W = 22.0, p = .527 (n = 162 pairs). Holm-corrected p = .937.
+  claude-haiku-4.5-thinking (perseveration): mean difference = 0.019 (95% bootstrap CI [-0.031, 0.068]), t(161) = 0.73, p = .469, Cohen's dz = 0.06; Wilcoxon W = 63.0, p = .467 (n = 162 pairs). Holm-corrected p = .937.
+  POOLED (perseveration): mean difference = 0.015 (95% bootstrap CI [-0.015, 0.046]), t(323) = 0.96, p = .337, Cohen's dz = 0.05; Wilcoxon W = 154.0, p = .336 (n = 324 pairs).
+
+--- Outcome: false alarms on clean trials ---
+
+model                      off    on     diff      t     df  p        p_holm   dz    pairs  
+--------------------------------------------------------------------------------------------
+claude-haiku-4.5           18.9%  21.6%  +2.7 pts  0.37  36  = .711   = 1.000  0.06  37     
+claude-haiku-4.5-thinking  27.8%  27.8%  +0.0 pts  0.00  35  = 1.000  = 1.000  0.00  36     
+
+APA sentences (positive difference = scaffolding increases the outcome):
+  claude-haiku-4.5 (false alarms on clean trials): mean difference = 0.027 (95% bootstrap CI [-0.108, 0.162]), t(36) = 0.37, p = .711, Cohen's dz = 0.06; Wilcoxon W = 12.0, p = .705 (n = 37 pairs). Holm-corrected p = 1.000.
+  claude-haiku-4.5-thinking (false alarms on clean trials): mean difference = 0.000 (95% bootstrap CI [-0.167, 0.167]), t(35) = 0.00, p = 1.000, Cohen's dz = 0.00; Wilcoxon W = 27.5, p = 1.000 (n = 36 pairs). Holm-corrected p = 1.000.
+  POOLED (false alarms on clean trials): mean difference = 0.014 (95% bootstrap CI [-0.096, 0.123]), t(72) = 0.24, p = .810, Cohen's dz = 0.03; Wilcoxon W = 72.0, p = .808 (n = 73 pairs).
+
+--- Does scaffolding help most where failures are quiet? ---
+
+visibility  off    on     difference (pts)  n off  n on  
+---------------------------------------------------------
+loud        95.0%  97.1%  +2.1              238    241   
+quiet       60.6%  59.6%  -1.1              94     94    
+  Detection ~ scaffolding x visibility: binomial GEE with exchangeable working correlation clustered on task (n = 667).
+      Intercept: b = 2.901 (SE 0.431), OR = 18.18, z = 6.73, p < .001
+      C(scaffolding)[T.on]: b = 0.619 (SE 0.511), OR = 1.86, z = 1.21, p = .225
+      C(visibility)[T.quiet]: b = -2.480 (SE 0.506), OR = 0.08, z = -4.90, p < .001
+      C(scaffolding)[T.on]:C(visibility)[T.quiet]: b = -0.669 (SE 0.495), OR = 0.51, z = -1.35, p = .176
+  (The interaction term tests whether the scaffolding benefit differs between quiet and loud failures.)

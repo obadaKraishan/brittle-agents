@@ -1,0 +1,37 @@
+Brittle Agents
+Copyright (c) 2026 Obada Kraishan
+
+The code in this repository is released under the MIT License (LICENSE).
+
+This repository also contains material derived from the Berkeley
+Function-Calling Leaderboard (BFCL), developed by the Gorilla project at the
+University of California, Berkeley:
+
+  Dataset: https://huggingface.co/datasets/gorilla-llm/Berkeley-Function-Calling-Leaderboard
+           (revision 61fc0608cfd831fcfbbaa676ebdfef0ed963eeda)
+  Code:    https://github.com/ShishirPatil/gorilla
+           (commit 6ea57973c7a6097fd7c5915698c54c17c5b1b6c8)
+
+BFCL is licensed under the Apache License, Version 2.0. The BFCL-derived
+files listed below are distributed under the same license; its full text is
+in LICENSE-DATA.
+
+  01_environment/outputs/task_suite.json, task_suite.csv
+  02_data_collection/outputs/trajectories/reference_states.json
+  02_data_collection/outputs/trajectories/*.jsonl
+  04_codebook/outputs/handcode_sample_FILLED.csv
+
+Changes made to the BFCL material:
+  - 24 tasks were selected from the multi-turn base and composite splits
+    (BFCL_v3_multi_turn_base.json, BFCL_v3_multi_turn_composite.json) and
+    stored with new task IDs (T001-T024); the list of environment classes
+    of each task is stored sorted.
+  - reference_states.json holds the environment states obtained by
+    executing each task's ground-truth calls with the BFCL environment code.
+  - The trajectories record language-model agents working on these tasks
+    through a fault-injection layer; some tool results in them were
+    deliberately altered (timeouts, removed tools, rejected arguments, and
+    corrupted values) as part of the study.
+
+The BFCL environment code itself is not redistributed. It is fetched at the
+commit above into third_party/ when needed.

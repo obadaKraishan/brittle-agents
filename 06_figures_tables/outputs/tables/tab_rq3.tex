@@ -1,0 +1,19 @@
+\begin{table}[!t]
+\centering
+\caption{Recovery and effort by condition.}
+\label{tab:rq3}
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{lccccc}
+\hline
+Condition & Recovered & Same tool & Identical & Cap hit & Extra steps \\
+\hline
+clean & 63.3\% & -- & -- & 23.2\% & $+0.01$ \\
+timeout & 59.6\% & 21.4\% & 1.1\% & 24.8\% & $+0.53$ \\
+missing tool & 39.9\% & 12.5\% & 1.1\% & 29.3\% & $+1.47$ \\
+schema drift & 59.2\% & 17.6\% & 1.8\% & 31.7\% & $+1.85$ \\
+silent corruption & 60.4\% & 22.2\% & 0.8\% & 25.9\% & $+0.56$ \\
+\hline
+\end{tabular}
+\par\smallskip\scriptsize Clean recovery is the agreement of two independent fault-free runs. ``Same tool'' and ``Identical'' are three or more consecutive calls after the fault, to the same tool or with the same tool and arguments; neither is defined for clean trials. Only missing tool differs from clean in recovery (task-clustered GEE, $p_{\text{Holm}} < .001$).
+\end{table}

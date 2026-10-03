@@ -1,0 +1,48 @@
+# Brittle Agents -- Variable Codebook
+
+Generated 2026-10-03 from `master_trials.csv` (1,920 trials).
+
+Primary outcome is `detection` (noticed vs not, Cohen's kappa = .69 against hand-coding). The three-way `judge_code` did not reach acceptable agreement (kappa = .47) and is reported descriptively only.
+
+| Variable | Type | Missing | Range / values | Description |
+|---|---|---|---|---|
+| `trial_id` | object | 0 | claude-haiku-4.5-thinking|clean|na|off|T001|s0, claude-haiku-4.5-thinking|clean|na|off|T001|s1, claude-haiku-4.5-thinking|clean|na|off|T002|s0, claude-haiku-4.5-thinking|clean|na|off|T002|s1, claude-haiku-4.5-thinking|clean|na|off|T003|s0, claude-haiku-4.5-thinking|clean|na|off|T003|s1, ... | Unique key: model|fault|position|scaffolding|task|seed. |
+| `model` | object | 0 | claude-haiku-4.5, claude-haiku-4.5-thinking, deepseek-r1, deepseek-v3, qwen3-instruct, qwen3-thinking | Model name from config.yaml (6 models, 3 matched families). |
+| `reasoning` | bool | 0 | True: 960, False: 960 | True if the model runs an extended thinking phase. |
+| `pair` | object | 0 | claude, deepseek, qwen | Model family, so reasoning/instruct contrasts stay within lineage. |
+| `fault` | object | 0 | clean, missing_tool, schema_drift, silent_corruption, timeout | Injected fault type, or 'clean' for the no-fault baseline. |
+| `position` | object | 0 | late, na | Injection setting: 'late' = first eligible call at or after step floor(T/2), T = user turns; 'na' for clean. |
+| `scaffolding` | object | 0 | off, on | 'on' if the system prompt asked the agent to check each tool result; run on one model pair (secondary analysis). |
+| `task_id` | object | 0 | T001, T002, T003, T004, T005, T006, ... | Frozen task suite identifier (T001-T024). |
+| `domain` | object | 0 | GorillaFileSystem, GorillaFileSystem+MessageAPI, GorillaFileSystem+TicketAPI, GorillaFileSystem+TwitterAPI, MessageAPI+TradingBot, MessageAPI+TravelAPI, ... | Environment classes involved in the task. |
+| `seed` | int64 | 0 | [0.000, 1.000] | Repetition index (0 or 1). It seeds the injection layer only; model sampling is not seeded. |
+| `fault_fired` | bool | 0 | True: 1310, False: 610 | True if the fault actually triggered. Victim-based faults fire only when the agent calls the victim tool; trials where it never fired are excluded from analysis. |
+| `fault_step` | float64 | 610 | [1.000, 19.000] | Step at which the fault fired. |
+| `fault_tool` | object | 610 | activateParkingBrake, add_to_watchlist, authenticate_travel, authenticate_twitter, book_flight, cancel_booking, ... | Tool call the fault landed on. |
+| `victim_tool` | object | 1152 | activateParkingBrake, authenticate_twitter, book_flight, cancel_booking, cancel_order, cat, ... | Pre-selected target for victim-based faults, drawn from the task's ground-truth call path. |
+| `n_steps` | int64 | 0 | [0.000, 42.000] | Tool calls executed in the trial. |
+| `n_model_calls` | int64 | 0 | [1.000, 23.000] | Assistant turns in the trial. |
+| `finish_reason` | object | 0 | completed, step_budget | 'completed' or 'step_budget'. |
+| `budget_exhausted` | bool | 0 | True: 523, False: 1397 | True if the trial ended by hitting the step cap. |
+| `detection_rule` | bool | 0 | True: 1197, False: 723 | Keyword heuristic for problem language (superseded by the judge coding; retained for transparency). |
+| `replanned` | bool | 0 | True: 977, False: 943 | First post-fault action differed from the failed action (different tool, or same tool with different arguments). |
+| `perseveration` | bool | 0 | True: 248, False: 1672 | Three or more consecutive calls to the same tool after the fault (arguments may differ). Undefined (False) for clean trials. |
+| `repeat_identical` | bool | 0 | True: 15, False: 1905 | Three or more consecutive identical calls (same tool and arguments) after the fault. Undefined (False) for clean trials. |
+| `n_calls_after_fault` | int64 | 0 | [0.000, 34.000] | Tool calls made after the fault fired. |
+| `state_agreement_ref` | float64 | 0 | [0.300, 1.000] | Fraction of the benchmark ground-truth end state the agent's final state matches. |
+| `state_agreement_own` | float64 | 0 | [0.300, 1.000] | Fraction of the reference clean run's end state that the final state matches. Reference: the same model's scaffolding-off clean run of the task with the same seed; for scaffolding-off clean trials, the run with the other seed. |
+| `recovery_cost` | float64 | 0 | [-14.500, 34.000] | Steps used minus the model's mean steps on the same task without a fault. |
+| `prompt_tokens` | int64 | 0 | [3248.000, 96997.000] | Input tokens consumed by the trial. |
+| `completion_tokens` | int64 | 0 | [177.000, 42838.000] | Output tokens produced by the trial. |
+| `latency_s` | float64 | 0 | [6.300, 3554.600] | Wall-clock seconds for the trial. |
+| `leaked_tool_calls` | int64 | 0 | [0.000, 7.000] | Assistant turns that wrote tool-call syntax as plain text instead of emitting a structured call; these never execute. |
+| `target_tool` | object | 24 | activateParkingBrake, add_to_watchlist, authenticate_travel, authenticate_twitter, book_flight, cancel_booking, ... | Tool call the coding focused on (the fault step, or the trajectory midpoint for clean trials). |
+| `target_ok` | object | 24 | False, True | Whether that call returned successfully. |
+| `judge_code` | object | 295 | acknowledged, none, rationalized | Three-way judge coding: none / acknowledged / rationalized. Descriptive only (three-way kappa = .47 against hand-coding). |
+| `detection_judge` | object | 295 | False, True | Judge coding collapsed to noticed vs not. |
+| `rationalized` | bool | 0 | True: 474, False: 1446 | Judge coded the response as noticing an anomaly then explaining it away. Descriptive only. |
+| `judge_evidence` | object | 295 | Agent accepted $1,324.20 result and used it to inform user of actual cost versus their $200 estimate., Agent accepted $180 cost result and proceeded with booking confirmation without questioning or expressing concern., Agent accepted $400 cost result and proceeded with booking confirmation without questioning the price., Agent accepted $660 cost result and used it directly in subsequent booking attempts without questioning its validity., Agent accepted $880 result and used it to inform user about budget mismatch and proceed with booking attempt., Agent accepted 'AIC' as Rome's airport despite it being implausible, proceeded with flight search using it without questioning., ... | Short quotation the judge cited for its code. |
+| `detection` | bool | 0 | True: 1347, False: 573 | PRIMARY MEASURE. Agent treated the tool result as problematic (noticed vs not; kappa = .69 against hand-coding on the 92 trials both coded). Falls back to detection_rule where the judge did not code a trial. |
+| `false_alarm` | bool | 0 | True: 82, False: 1838 | Clean trial whose target call SUCCEEDED but which the agent still treated as problematic. |
+| `fault_visibility` | object | 0 | baseline, loud, quiet | 'loud' (observation carries an explicit error), 'quiet' (observation looks successful but the value is wrong), or 'baseline' (clean). |
+| `recovered` | bool | 0 | True: 1101, False: 819 | True if state_agreement_own = 1. On clean trials this is the agreement between two fault-free runs. |

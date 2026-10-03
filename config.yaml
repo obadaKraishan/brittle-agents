@@ -1,0 +1,143 @@
+# =============================================================================
+# BRITTLE AGENTS - configuration
+# =============================================================================
+# Every script reads this file. Typed faults are injected into executable
+# multi-step tool environments; the measures are detection, replanning,
+# recovery, and repetition.
+# =============================================================================
+
+project:
+  name: brittle-agents
+  seed: 42                       # task sampling and bootstrap resampling
+
+# -----------------------------------------------------------------------------
+# Paths (relative to the repository root)
+# -----------------------------------------------------------------------------
+paths:
+  env_dir: 01_environment/outputs
+  task_suite: 01_environment/outputs/task_suite.json
+  trajectories_dir: 02_data_collection/outputs/trajectories
+  processing_dir: 03_data_processing/outputs
+  codebook_dir: 04_codebook/outputs
+
+# -----------------------------------------------------------------------------
+# Task suite: multi-turn split of the Berkeley Function-Calling Leaderboard
+# (BFCL v3 multi-turn files). Only tasks whose environments execute locally
+# are eligible.
+# -----------------------------------------------------------------------------
+tasks:
+  hf_repo: gorilla-llm/Berkeley-Function-Calling-Leaderboard
+  # Dataset revision and environment-code commit used to build the suite;
+  # both reproduce task_suite.json and reference_states.json exactly.
+  hf_revision: 61fc0608cfd831fcfbbaa676ebdfef0ed963eeda
+  gorilla_repo: https://github.com/ShishirPatil/gorilla
+  gorilla_commit: 6ea57973c7a6097fd7c5915698c54c17c5b1b6c8
+  n_tasks: 24                    # frozen suite size
+  min_turns: 3                   # user turns per task
+  max_turns: 10
+  balance_by: domain             # sample evenly across environment domains
+
+# -----------------------------------------------------------------------------
+# Conditions. 'clean' is the no-fault baseline. Timeout, missing tool, and
+# schema drift return an explicit error (loud); silent corruption returns a
+# well-formed wrong value (quiet).
+# -----------------------------------------------------------------------------
+faults:
+  - clean
+  - timeout
+  - silent_corruption
+  - schema_drift
+  - missing_tool
+
+# 'late': the fault fires on the first eligible call at or after step
+# floor(T/2), T = number of user turns. 'clean' ignores this.
+fault_positions: [late]
+
+# -----------------------------------------------------------------------------
+# Agent loop
+# -----------------------------------------------------------------------------
+agent:
+  max_steps: 15                  # cap on tool calls per trial
+  n_seeds: 2                     # repetitions per cell (sampling is not seeded)
+  temperature: 1.0
+  max_output_tokens: 1024
+  request_timeout_s: 120
+  max_retries: 4
+  concurrency: 6
+  # Secondary analysis: one extra system-prompt line asking the agent to
+  # check each tool result, run on one model pair.
+  scaffolding_conditions: [off, on]
+  scaffolding_models:
+    - claude-haiku-4.5-thinking
+    - claude-haiku-4.5
+
+# -----------------------------------------------------------------------------
+# Trajectory coding. Rule-based measures are computed directly; the judge
+# model codes whether the agent treated the tool result as a problem.
+# -----------------------------------------------------------------------------
+coding:
+  judge_model: anthropic/claude-haiku-4.5
+  judge_temperature: 0.0
+  hand_coded_sample: 100         # size of the hand-coding sheet
+  perseveration_threshold: 3     # consecutive calls that count as repetition
+
+# -----------------------------------------------------------------------------
+# Model panel: three matched reasoning / instruct pairs, so the reasoning
+# contrast (RQ2) stays within a family. Prices are USD per 1M tokens at
+# collection time and are used only for the optional --spend-cap guard.
+# -----------------------------------------------------------------------------
+models:
+  - name: claude-haiku-4.5-thinking
+    model_id: anthropic/claude-haiku-4.5
+    reasoning: true
+    pair: claude
+    reasoning_budget: 2048
+    price_in: 1.00
+    price_out: 5.00
+
+  - name: claude-haiku-4.5
+    model_id: anthropic/claude-haiku-4.5
+    reasoning: false
+    pair: claude
+    price_in: 1.00
+    price_out: 5.00
+
+  - name: deepseek-r1
+    model_id: deepseek/deepseek-r1
+    reasoning: true
+    pair: deepseek
+    reasoning_budget: 2048
+    cannot_disable_thinking: true
+    price_in: 0.55
+    price_out: 2.19
+
+  - name: deepseek-v3
+    model_id: deepseek/deepseek-chat
+    reasoning: false
+    pair: deepseek
+    price_in: 0.27
+    price_out: 1.10
+
+  - name: qwen3-thinking
+    model_id: qwen/qwen3-235b-a22b-thinking-2507
+    reasoning: true
+    pair: qwen
+    reasoning_budget: 2048
+    cannot_disable_thinking: true
+    price_in: 0.30
+    price_out: 3.00
+
+  - name: qwen3-instruct
+    model_id: qwen/qwen3-235b-a22b-2507
+    reasoning: false
+    pair: qwen
+    price_in: 0.20
+    price_out: 0.60
+
+# -----------------------------------------------------------------------------
+# Provider: a single gateway keeps the interface uniform across models
+# -----------------------------------------------------------------------------
+providers:
+  openrouter:
+    env_key: OPENROUTER_API_KEY
+    base_url: https://openrouter.ai/api/v1

@@ -1,0 +1,39 @@
+============================================================================
+ RQ1 -- DETECTION OF TOOL FAILURES BY FAULT VISIBILITY
+ Generated: 2026-10-03T16:45:47.205242+00:00
+============================================================================
+
+ Detection = agent explicitly treated the tool result as problematic
+ (two-way judge coding; agreement with hand-coding in 04_codebook/outputs/judge_agreement.txt).
+
+--- Detection by visibility ---
+
+condition            n    detected  rate   95% CI (task-clustered)  
+--------------------------------------------------------------------
+baseline (no fault)  306  82        26.8%  [17.8%, 36.5%]           
+loud fault           936  855       91.3%  [88.3%, 94.1%]           
+quiet fault          374  220       58.8%  [45.7%, 71.2%]           
+
+APA sentences:
+  Loud vs quiet faults: 91.3% vs 58.8%, difference = 32.5% points, z = 13.86, p < .001, Cohen's h = 0.80 (n = 936 and 374). Holm-corrected p < .001.
+  Quiet faults vs no-fault baseline: 58.8% vs 26.8%, difference = 32.0% points, z = 8.36, p < .001, Cohen's h = 0.66 (n = 374 and 306). Holm-corrected p < .001.
+  Loud faults vs no-fault baseline: 91.3% vs 26.8%, difference = 64.5% points, z = 22.77, p < .001, Cohen's h = 1.46 (n = 936 and 306). Holm-corrected p < .001.
+
+--- Detection by fault type ---
+
+fault              n    rate   95% CI          vs baseline (z, p_holm, h)     
+------------------------------------------------------------------------------
+missing_tool       273  91.2%  [86.5%, 95.2%]  z = 15.64, p < .001, h = 1.45  
+schema_drift       284  91.2%  [86.3%, 95.4%]  z = 15.83, p < .001, h = 1.45  
+silent_corruption  374  58.8%  [45.7%, 71.2%]  z = 8.36, p < .001, h = 0.66   
+timeout            379  91.6%  [88.0%, 94.5%]  z = 17.42, p < .001, h = 1.46  
+
+--- Binomial GEE (task-clustered): detection ~ visibility ---
+  Detection by visibility: binomial GEE with exchangeable working correlation clustered on task (n = 1616).
+      Intercept: b = -1.025 (SE 0.247), OR = 0.36, z = -4.14, p < .001
+      C(visibility)[T.quiet]: b = 1.377 (SE 0.213), OR = 3.96, z = 6.48, p < .001
+      C(visibility)[T.loud]: b = 3.354 (SE 0.276), OR = 28.61, z = 12.14, p < .001
+  Fault trials only, adding reasoning capability (quiet = reference): binomial GEE with exchangeable working correlation clustered on task (n = 1310).
+      Intercept: b = 0.584 (SE 0.286), OR = 1.79, z = 2.04, p = .041
+      C(visibility)[T.loud]: b = 1.985 (SE 0.318), OR = 7.28, z = 6.25, p < .001
+      C(reasoning)[T.True]: b = -0.502 (SE 0.119), OR = 0.61, z = -4.23, p < .001

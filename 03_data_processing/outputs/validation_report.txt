@@ -1,0 +1,40 @@
+==========================================================================
+ BRITTLE AGENTS -- VALIDATE DATASET
+ Timestamp : 2026-10-03T16:45:45.566859+00:00
+==========================================================================
+
+[1/4] Grid completeness (1,920 trials)
+  [✓] claude-haiku-4.5             480/480 trials
+  [✓] claude-haiku-4.5-thinking    480/480 trials
+  [✓] deepseek-r1                  240/240 trials
+  [✓] deepseek-v3                  240/240 trials
+  [✓] qwen3-instruct               240/240 trials
+  [✓] qwen3-thinking               240/240 trials
+      tasks in data: 24 (suite has 24); seeds: [0, 1]; scaffolding arms: ['off', 'on']
+
+[2/4] Fault trigger rates (reported, not enforced)
+      missing_tool          273/384     71%   (victim-based: fires only if the agent calls the victim tool)
+      schema_drift          284/384     74%   (victim-based: fires only if the agent calls the victim tool)
+      silent_corruption     374/384     97%
+      timeout               379/384     99%
+  [✓] no clean trial recorded a fault
+
+[3/4] Measure sanity
+  [✓] detection is boolean
+  [✓] replanned is boolean
+  [✓] perseveration is boolean
+  [✓] false_alarm is boolean
+  [✓] state_agreement_ref within [0, 1]  -- n = 1920
+  [✓] state_agreement_own within [0, 1]  -- n = 1920
+  [✓] recovery defined for 1,920 trials  -- 100% of trials have a clean-run baseline
+      226 trials excluded from analysis (fault never fired) -- analysable n = 1,694
+
+[4/4] Data quality
+      step-budget exhausted: 27% of trials (cap = 15 steps)
+      [!] tool-call text leakage (calls written as text, never executed):
+          deepseek-r1                   1.80 per trial
+      judge coverage: 85% of trials coded
+
+==========================================================================
+ RESULT: DATASET VALID ✓
+==========================================================================

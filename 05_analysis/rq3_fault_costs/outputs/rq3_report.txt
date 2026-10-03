@@ -1,0 +1,99 @@
+============================================================================
+ RQ3 -- WHAT A SINGLE FAULT COSTS: RECOVERY, REPETITION, EFFORT
+ Generated: 2026-10-03T16:45:50.104047+00:00
+============================================================================
+
+--- Clean baseline: agreement between clean runs ---
+ Scaffolding-off clean runs are scored against the other seed's clean
+ run; scaffolding-on clean runs against the scaffolding-off clean run
+ with the same seed.
+
+group                           n    agreement  95% CI (task-clustered)  
+-------------------------------------------------------------------------
+all clean trials                384  63.3%      [53.1%, 73.2%]           
+scaffolding off (seed vs seed)  288  58.3%      [47.9%, 68.1%]           
+scaffolding on (vs off run)     96   78.1%      [64.6%, 90.6%]           
+  claude-haiku-4.5              96   84.4%      [70.8%, 95.8%]           
+  claude-haiku-4.5-thinking     96   75.0%      [59.4%, 89.6%]           
+  deepseek-r1                   48   41.7%      [20.8%, 58.3%]           
+  deepseek-v3                   48   41.7%      [20.8%, 62.5%]           
+  qwen3-instruct                48   62.5%      [45.8%, 79.2%]           
+  qwen3-thinking                48   41.7%      [20.8%, 62.5%]           
+
+--- Recovery by fault type against the clean baseline ---
+
+ clean baseline: 63.3% (n = 384), task-clustered CI [53.1%, 73.2%]
+
+fault              n    recovered  95% CI          h      GEE OR (p_holm)  + model OR (p_holm)  
+------------------------------------------------------------------------------------------------
+timeout            379  59.6%      [49.2%, 69.1%]  -0.08  0.85 (= .234)    0.84 (= .201)        
+missing_tool       273  39.9%      [28.1%, 52.4%]  -0.47  0.34 (< .001)    0.30 (< .001)        
+schema_drift       284  59.2%      [48.1%, 68.8%]  -0.08  0.80 (= .117)    0.76 (= .024)        
+silent_corruption  374  60.4%      [51.2%, 69.3%]  -0.06  0.88 (= .234)    0.86 (= .201)        
+ GEE: recovered ~ condition (clean = reference), clustered on task;
+ second column adds model as a covariate. Holm across the four faults.
+  Recovery ~ condition: binomial GEE with exchangeable working correlation clustered on task (n = 1694).
+      Intercept: b = 0.544 (SE 0.212), OR = 1.72, z = 2.56, p = .010
+      C(condition)[T.timeout]: b = -0.158 (SE 0.101), OR = 0.85, z = -1.57, p = .117
+      C(condition)[T.missing_tool]: b = -1.082 (SE 0.213), OR = 0.34, z = -5.07, p < .001
+      C(condition)[T.schema_drift]: b = -0.225 (SE 0.109), OR = 0.80, z = -2.07, p = .039
+      C(condition)[T.silent_corruption]: b = -0.133 (SE 0.094), OR = 0.88, z = -1.41, p = .158
+  Recovery ~ condition + model: binomial GEE with exchangeable working correlation clustered on task (n = 1694).
+      Intercept: b = 1.090 (SE 0.260), OR = 2.97, z = 4.18, p < .001
+      C(condition)[T.timeout]: b = -0.179 (SE 0.109), OR = 0.84, z = -1.64, p = .100
+      C(condition)[T.missing_tool]: b = -1.188 (SE 0.242), OR = 0.30, z = -4.90, p < .001
+      C(condition)[T.schema_drift]: b = -0.274 (SE 0.103), OR = 0.76, z = -2.65, p = .008
+      C(condition)[T.silent_corruption]: b = -0.148 (SE 0.095), OR = 0.86, z = -1.55, p = .122
+      C(model)[T.claude-haiku-4.5-thinking]: b = -0.245 (SE 0.144), OR = 0.78, z = -1.70, p = .088
+      C(model)[T.deepseek-r1]: b = -1.461 (SE 0.303), OR = 0.23, z = -4.81, p < .001
+      C(model)[T.deepseek-v3]: b = -1.288 (SE 0.264), OR = 0.28, z = -4.88, p < .001
+      C(model)[T.qwen3-instruct]: b = -1.057 (SE 0.356), OR = 0.35, z = -2.97, p = .003
+      C(model)[T.qwen3-thinking]: b = -1.326 (SE 0.359), OR = 0.27, z = -3.69, p < .001
+
+--- Repetition and effort ---
+
+condition          recovered  same tool x3  identical x3  cap hit  steps  extra steps [95% CI]  
+------------------------------------------------------------------------------------------------
+clean              63.3%      --            --            23.2%    9.4    +0.01 [-0.17, +0.19]  
+timeout            59.6%      21.4%         1.1%          24.8%    10.0   +0.53 [+0.22, +0.84]  
+missing_tool       39.9%      12.5%         1.1%          29.3%    10.7   +1.47 [+0.89, +2.08]  
+schema_drift       59.2%      17.6%         1.8%          31.7%    11.3   +1.85 [+1.45, +2.28]  
+silent_corruption  60.4%      22.2%         0.8%          25.9%    9.9    +0.56 [+0.26, +0.85]  
+ Repetition counts calls after the fault step, so it is undefined for clean trials.
+
+--- When the fault fired ---
+
+fault              n     median step  at step 1 or 2  before reference midpoint  
+---------------------------------------------------------------------------------
+all faults         1310  3            42.1%           58.2%                      
+missing_tool       273   5            18.3%           22.0%                      
+schema_drift       284   5            15.8%           25.4%                      
+silent_corruption  374   2            58.6%           79.9%                      
+timeout            379   2            62.5%           87.6%                      
+ Reference trajectories: median 7 ground-truth calls (range 4-10). The target step is half the number of user turns.
+
+--- Does noticing help? Detection x recovery on fault trials ---
+
+      recovery when the failure was noticed:     55.6% (n = 1075)
+      recovery when the failure went unnoticed:  55.7% (n = 235)
+  Noticed vs unnoticed: 55.6% vs 55.7%, difference = -0.1% points, z = -0.03, p = .974, Cohen's h = -0.00 (n = 1075 and 235).
+  Recovery ~ detection: binomial GEE with exchangeable working correlation clustered on task (n = 1310).
+      Intercept: b = 0.031 (SE 0.241), OR = 1.03, z = 0.13, p = .899
+      detection: b = 0.192 (SE 0.165), OR = 1.21, z = 1.16, p = .244
+  Recovery ~ detection + C(fault): binomial GEE with exchangeable working correlation clustered on task (n = 1310).
+      Intercept: b = -0.905 (SE 0.276), OR = 0.40, z = -3.27, p = .001
+      C(fault)[T.schema_drift]: b = 0.857 (SE 0.242), OR = 2.36, z = 3.54, p < .001
+      C(fault)[T.silent_corruption]: b = 1.086 (SE 0.214), OR = 2.96, z = 5.07, p < .001
+      C(fault)[T.timeout]: b = 0.928 (SE 0.209), OR = 2.53, z = 4.44, p < .001
+      detection: b = 0.412 (SE 0.142), OR = 1.51, z = 2.91, p = .004
+  Recovery ~ detection + C(fault) + C(model): binomial GEE with exchangeable working correlation clustered on task (n = 1310).
+      Intercept: b = -0.349 (SE 0.356), OR = 0.71, z = -0.98, p = .328
+      C(fault)[T.schema_drift]: b = 0.907 (SE 0.265), OR = 2.48, z = 3.43, p < .001
+      C(fault)[T.silent_corruption]: b = 1.115 (SE 0.244), OR = 3.05, z = 4.56, p < .001
+      C(fault)[T.timeout]: b = 1.002 (SE 0.237), OR = 2.72, z = 4.23, p < .001
+      C(model)[T.claude-haiku-4.5-thinking]: b = -0.171 (SE 0.124), OR = 0.84, z = -1.38, p = .166
+      C(model)[T.deepseek-r1]: b = -1.316 (SE 0.288), OR = 0.27, z = -4.56, p < .001
+      C(model)[T.deepseek-v3]: b = -1.097 (SE 0.266), OR = 0.33, z = -4.13, p < .001
+      C(model)[T.qwen3-instruct]: b = -1.056 (SE 0.328), OR = 0.35, z = -3.22, p = .001
+      C(model)[T.qwen3-thinking]: b = -1.114 (SE 0.322), OR = 0.33, z = -3.46, p < .001
+      detection: b = 0.257 (SE 0.156), OR = 1.29, z = 1.65, p = .098

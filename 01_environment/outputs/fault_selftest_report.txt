@@ -1,0 +1,51 @@
+==========================================================================
+ BRITTLE AGENTS -- FAULT INJECTION SELF-TEST
+ Timestamp : 2026-10-03T16:45:44.023821+00:00
+ Suite     : 24 tasks
+==========================================================================
+
+[1/6] Registry and tool specs (every task)
+  [✓] every tool has a JSON-serialisable spec (24/24 tasks)
+
+[2/6] Clean condition never faults (every task)
+  [✓] no fault in a clean replay (24/24 tasks)
+
+[3/6] Each fault type fires exactly once, at or after the target (every task)
+  [✓] timeout            fires
+  [✓] timeout            fires exactly once
+  [✓] timeout            fires at or after the target step
+  [✓] silent_corruption  fires
+  [✓] silent_corruption  fires exactly once
+  [✓] silent_corruption  fires at or after the target step
+  [✓] schema_drift       fires
+  [✓] schema_drift       fires exactly once
+  [✓] schema_drift       fires at or after the target step
+  [✓] missing_tool       fires
+  [✓] missing_tool       fires exactly once
+  [✓] missing_tool       fires at or after the target step
+  [✓] empty_result       fires
+  [✓] empty_result       fires exactly once
+  [✓] empty_result       fires at or after the target step
+
+[4/6] Fault semantics (every task)
+  [✓] timeout returns an error mentioning a timeout (24/24)
+  [✓] schema_drift returns an unknown-argument error (24/24)
+  [✓] missing_tool removes the tool and it stays gone (24/24)
+  [✓] empty_result succeeds with an empty payload (24/24)
+
+[5/6] silent_corruption: value differs, type and state preserved (every task)
+  [✓] corrupted value differs from the clean value (24/24)
+  [✓] corrupted value keeps its type, None -> 'unknown' (24/24)
+  (the real result was None on 2 task(s); 'unknown' is returned there by design)
+  [✓] end state after replay equals the clean replay (24/24)
+
+[6/6] Determinism: same inputs -> identical fault behaviour (every task)
+  [✓] timeout            reproducible (24/24)
+  [✓] silent_corruption  reproducible (24/24)
+  [✓] schema_drift       reproducible (24/24)
+  [✓] missing_tool       reproducible (24/24)
+  [✓] empty_result       reproducible (24/24)
+
+==========================================================================
+ RESULT: SELF-TEST PASSED ✓  -- the instrument behaves as specified
+==========================================================================

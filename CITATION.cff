@@ -1,0 +1,30 @@
+cff-version: 1.2.0
+message: "If you use this code or data, please cite the paper below."
+title: "Brittle Agents: fault-injection harness, data, and analysis for Loud Failures, Quiet Failures"
+type: software
+authors:
+  - family-names: Kraishan
+    given-names: Obada
+    affiliation: "Texas Tech University"
+license: MIT
+repository-code: "https://github.com/obadaKraishan/brittle-agents"
+keywords:
+  - tool-using agents
+  - fault injection
+  - failure detection
+  - agent evaluation
+  - reasoning models
+preferred-citation:
+  type: conference-paper
+  title: "Loud Failures, Quiet Failures: Fault Detection and Recovery in Tool-Using Language Model Agents"
+  authors:
+    - family-names: Kraishan
+      given-names: Obada
+      affiliation: "Texas Tech University"
+  collection-title: "Proceedings of the IEEE International Conference on Cognitive Machine Intelligence (CogMI)"
+  conference:
+    name: "2026 IEEE International Conference on Cognitive Machine Intelligence (CogMI)"
+  publisher:
+    name: IEEE
+  year: 2026
+  notes: "To appear."

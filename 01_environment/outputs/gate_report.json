@@ -1,0 +1,82 @@
+{
+  "GorillaFileSystem": {
+    "module": "bfcl_eval.eval_checker.multi_turn_eval.func_source_code.gorilla_file_system",
+    "stateless": false,
+    "scenario_loaded": true,
+    "n_methods": 18,
+    "ok": true
+  },
+  "MathAPI": {
+    "module": "bfcl_eval.eval_checker.multi_turn_eval.func_source_code.math_api",
+    "stateless": true,
+    "ok": false,
+    "error": "ModuleNotFoundError(\"No module named 'mpmath'\")"
+  },
+  "MessageAPI": {
+    "module": "bfcl_eval.eval_checker.multi_turn_eval.func_source_code.message_api",
+    "stateless": false,
+    "scenario_loaded": true,
+    "n_methods": 10,
+    "ok": true
+  },
+  "TwitterAPI": {
+    "module": "bfcl_eval.eval_checker.multi_turn_eval.func_source_code.posting_api",
+    "stateless": false,
+    "scenario_loaded": true,
+    "n_methods": 14,
+    "ok": true
+  },
+  "TicketAPI": {
+    "module": "bfcl_eval.eval_checker.multi_turn_eval.func_source_code.ticket_api",
+    "stateless": false,
+    "scenario_loaded": true,
+    "n_methods": 9,
+    "ok": true
+  },
+  "TradingBot": {
+    "module": "bfcl_eval.eval_checker.multi_turn_eval.func_source_code.trading_bot",
+    "stateless": false,
+    "scenario_loaded": true,
+    "n_methods": 20,
+    "ok": true
+  },
+  "TravelAPI": {
+    "module": "bfcl_eval.eval_checker.multi_turn_eval.func_source_code.travel_booking",
+    "stateless": false,
+    "scenario_loaded": true,
+    "n_methods": 18,
+    "ok": true
+  },
+  "VehicleControlAPI": {
+    "module": "bfcl_eval.eval_checker.multi_turn_eval.func_source_code.vehicle_control",
+    "stateless": false,
+    "scenario_loaded": true,
+    "n_methods": 22,
+    "ok": true
+  },
+  "WebSearchAPI": {
+    "module": "bfcl_eval.eval_checker.multi_turn_eval.func_source_code.web_search",
+    "stateless": false,
+    "ok": false,
+    "error": "ModuleNotFoundError(\"No module named 'bs4'\")"
+  },
+  "MemoryAPI_kv": {
+    "module": "bfcl_eval.eval_checker.multi_turn_eval.func_source_code.memory_kv",
+    "stateless": false,
+    "ok": false,
+    "error": "ModuleNotFoundError(\"No module named 'rank_bm25'\")"
+  },
+  "MemoryAPI_vector": {
+    "module": "bfcl_eval.eval_checker.multi_turn_eval.func_source_code.memory_vector",
+    "stateless": false,
+    "ok": false,
+    "error": "ModuleNotFoundError(\"No module named 'sentence_transformers'\")"
+  },
+  "MemoryAPI_rec_sum": {
+    "module": "bfcl_eval.eval_checker.multi_turn_eval.func_source_code.memory_rec_sum",
+    "stateless": false,
+    "scenario_loaded": false,
+    "n_methods": 5,
+    "ok": true
+  }
+}

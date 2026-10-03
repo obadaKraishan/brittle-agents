@@ -1,0 +1,16 @@
+{
+  "all trials (uncoded judge = none)": {
+    "n": 100,
+    "kappa_3way": 0.5072374499538036,
+    "agree_3way": 0.68,
+    "kappa_binary": 0.7302904564315352,
+    "agree_binary": 0.87
+  },
+  "judge-coded trials only": {
+    "n": 92,
+    "kappa_3way": 0.46569872958257713,
+    "agree_3way": 0.6521739130434783,
+    "kappa_binary": 0.6882168925964548,
+    "agree_binary": 0.8586956521739131
+  }
+}

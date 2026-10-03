@@ -1,0 +1,22 @@
+Hand-coded trials: 100; judge did not code 8 of them.
+
+all trials (uncoded judge = none) (n = 100)
+  three-way: kappa = 0.51, agreement = 68.0%
+  binary:    kappa = 0.73, agreement = 87.0%
+  confusion (rows = human, columns = judge):
+    judge_code    acknowledged  none  rationalized
+    hand_code                                     
+    acknowledged            33     0            19
+    none                     5    32             8
+    rationalized             0     0             3
+
+judge-coded trials only (n = 92)
+  three-way: kappa = 0.47, agreement = 65.2%
+  binary:    kappa = 0.69, agreement = 85.9%
+  confusion (rows = human, columns = judge):
+    judge_code    acknowledged  none  rationalized
+    hand_code                                     
+    acknowledged            33     0            19
+    none                     5    24             8
+    rationalized             0     0             3
+

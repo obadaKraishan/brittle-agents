@@ -1,0 +1,20 @@
+# secrets and local environments
+.env
+.venv/
+venv/
+
+# OS and editor files
+.DS_Store
+.idea/
+.vscode/
+__pycache__/
+*.pyc
+
+# BFCL environment code, fetched at the pinned commit when needed
+third_party/
+
+# local run artefacts
+00_setup/setup_report.txt
+02_data_collection/outputs/trajectories/run_log.txt
+02_data_collection/outputs/trajectories/run_manifest.json
+03_data_processing/outputs/handcode_sample.csv

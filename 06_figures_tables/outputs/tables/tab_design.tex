@@ -1,0 +1,20 @@
+\begin{table}[t]
+\centering
+\caption{Model panel. Each family contributes a matched reasoning and instruct pair.}
+\label{tab:design}
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{lllcc}
+\hline
+Model & Family & Type & Trials & Prompt arm \\
+\hline
+claude-haiku-4.5-thinking & claude & reasoning & 480 & yes \\
+claude-haiku-4.5 & claude & instruct & 480 & yes \\
+deepseek-r1 & deepseek & reasoning & 240 & -- \\
+deepseek-v3 & deepseek & instruct & 240 & -- \\
+qwen3-thinking & qwen & reasoning & 240 & -- \\
+qwen3-instruct & qwen & instruct & 240 & -- \\
+\hline
+\end{tabular}
+\par\smallskip\scriptsize 1{,}920 trials over 24 tasks, five conditions, two seeds. The secondary scaffolding analysis doubles one pair.
+\end{table}

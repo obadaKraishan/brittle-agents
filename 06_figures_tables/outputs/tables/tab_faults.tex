@@ -1,0 +1,19 @@
+\begin{table}[!t]
+\centering
+\caption{Conditions, visibility, and how often each fault fired.}
+\label{tab:faults}
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{llccc}
+\hline
+Condition & Visibility & Trials & Fired & Analysed \\
+\hline
+clean & baseline & 384 & -- & 384 \\
+timeout & loud & 384 & 99\% & 379 \\
+missing tool & loud & 384 & 71\% & 273 \\
+schema drift & loud & 384 & 74\% & 284 \\
+silent corruption & quiet & 384 & 97\% & 374 \\
+\hline
+\end{tabular}
+\par\smallskip\scriptsize Loud faults surface an explicit error; the quiet fault returns a well-formed but incorrect value. Missing tool and schema drift fire only when the agent calls the affected tool.
+\end{table}

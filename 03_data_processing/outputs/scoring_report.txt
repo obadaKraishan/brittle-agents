@@ -1,0 +1,65 @@
+==========================================================================
+ BRITTLE AGENTS -- SCORE TRAJECTORIES
+ Timestamp : 2026-10-03T16:45:44.624335+00:00
+==========================================================================
+
+[1/5] Loaded 1,920 unique trials from 40 files (0 duplicate lines dropped)
+      reference end-states available for 24 tasks
+
+[2/5] Computing rule-based measures
+      1,920 trials scored; 1,310 with a fault that fired
+
+[3/5] Judge coding of failure detection
+      1,626 trials eligible for coding (fault fired, plus clean trials for the false-alarm baseline)
+      judge: 1625 cached, 1 to code
+[WARN] --cache-only: 1 uncoded trials fall back to the rule-based measure.
+
+[4/5] Descriptives
+      analysable trials: 1,694 (excludes 226 where the fault never fired)
+
+      fault                    n   detect   replan   persev  recover    cap  steps
+      clean                  384     38%       0%       0%      63%    23%    9.4
+      missing_tool           273     91%      86%      12%      40%    29%   10.7
+      schema_drift           284     91%      61%      18%      59%    32%   11.3
+      silent_corruption      374     59%      94%      22%      60%    26%    9.9
+      timeout                379     92%      57%      21%      60%    25%   10.0
+
+      model                            n   detect  recover   persev
+      claude-haiku-4.5               429     76%      73%      15%
+      claude-haiku-4.5-thinking      430     76%      68%      14%
+      deepseek-r1                    184     67%      40%      16%
+      deepseek-v3                    210     73%      44%      12%
+      qwen3-instruct                 220     73%      49%       9%
+      qwen3-thinking                 221     60%      42%      21%
+
+      fault                   none  acknowl  rational
+      clean                   60%      30%       10%
+      missing_tool             1%      75%       24%
+      schema_drift             4%      65%       30%
+      silent_corruption       40%      31%       30%
+      timeout                  7%      43%       50%
+
+      tool-call text leakage (mean per trial; these calls never execute):
+        claude-haiku-4.5              0.00
+        claude-haiku-4.5-thinking     0.00
+        deepseek-r1                   1.80
+        deepseek-v3                   0.02
+        qwen3-instruct                0.00
+        qwen3-thinking                0.00
+
+      false-alarm baseline: 26.8% of clean trials whose target call SUCCEEDED were still coded as acknowledging a problem (n = 306)
+      (clean trials whose target call returned a genuine environment error: n = 70, 90% acknowledged -- these are correct detections, not false alarms)
+
+      Detection by fault visibility (the key contrast):
+      visibility         n    none  acknowl  rational  detect
+      baseline         384    60%      30%       10%     38%
+      loud             936     4%      59%       37%     91%
+      quiet            374    40%      31%       30%     59%
+      rule vs judge agreement: 63.0% (n = 1,625)
+
+[5/5] Saved master_trials.csv (1,920 rows x 42 cols)
+      handcode_sample.csv already exists; left untouched
+
+==========================================================================
+ RESULT: SCORING COMPLETE ✓
+==========================================================================

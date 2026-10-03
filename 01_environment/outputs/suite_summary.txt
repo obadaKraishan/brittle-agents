@@ -1,0 +1,66 @@
+==========================================================================
+ BRITTLE AGENTS -- BUILD TASK SUITE
+ Timestamp : 2026-08-14T21:09:51.343051+00:00
+ Seed      : 42 | target tasks: 24
+==========================================================================
+
+[1/5] Sources
+      gorilla repo already present at third_party/gorilla
+      BFCL_v3_multi_turn_base.json             200 tasks
+      BFCL_v3_multi_turn_composite.json        200 tasks
+      total candidate tasks: 400
+      possible_answer/BFCL_v3_multi_turn_base.json     200 ground-truth answers
+      possible_answer/BFCL_v3_multi_turn_composite.json 200 ground-truth answers
+      ground-truth answers available for 400 tasks
+
+[2/5] DAY-ONE GATE: do the environments run locally?
+      [✓] GorillaFileSystem    18 methods, scenario loaded
+      [✗] MathAPI              ModuleNotFoundError("No module named 'mpmath'")
+      [✓] MessageAPI           10 methods, scenario loaded
+      [✓] TwitterAPI           14 methods, scenario loaded
+      [✓] TicketAPI            9 methods, scenario loaded
+      [✓] TradingBot           20 methods, scenario loaded
+      [✓] TravelAPI            18 methods, scenario loaded
+      [✓] VehicleControlAPI    22 methods, scenario loaded
+      [✗] WebSearchAPI         ModuleNotFoundError("No module named 'bs4'")
+      [✗] MemoryAPI_kv         ModuleNotFoundError("No module named 'rank_bm25'")
+      [✗] MemoryAPI_vector     ModuleNotFoundError("No module named 'sentence_transformers'")
+      [✓] MemoryAPI_rec_sum    5 methods
+      executable classes: 8/12 (8 stateful)
+      task coverage: 350/400 (88%) runnable with the executable classes
+      excluded classes (optional extras, not required by the base/composite splits):
+        - MathAPI: ModuleNotFoundError("No module named 'mpmath'")
+        - WebSearchAPI: ModuleNotFoundError("No module named 'bs4'")
+        - MemoryAPI_kv: ModuleNotFoundError("No module named 'rank_bm25'")
+        - MemoryAPI_vector: ModuleNotFoundError("No module named 'sentence_transformers'")
+
+[3/5] Filtering to eligible tasks
+      eligible: 312  (excluded: 50 non-executable class, 0 stateless-only, 38 too short, 0 too long, 0 no ground truth)
+
+[4/5] Sampling 24 tasks balanced by domain
+      MessageAPI+TravelAPI                         2
+      GorillaFileSystem+TwitterAPI                 2
+      TravelAPI+TwitterAPI                         2
+      MessageAPI+TradingBot                        2
+      TradingBot                                   2
+      TravelAPI                                    2
+      MessageAPI+VehicleControlAPI                 2
+      VehicleControlAPI                            2
+      TwitterAPI+VehicleControlAPI                 1
+      GorillaFileSystem+TicketAPI                  1
+      TradingBot+TwitterAPI                        1
+      TicketAPI+TravelAPI                          1
+      TicketAPI+TradingBot                         1
+      TicketAPI+VehicleControlAPI                  1
+      GorillaFileSystem                            1
+      GorillaFileSystem+MessageAPI                 1
+      turns per task: min 3, median 5, max 9
+
+[5/5] Suite FROZEN: 24 tasks
+      JSON -> 01_environment/outputs/task_suite.json
+      CSV  -> 01_environment/outputs/task_suite.csv
+
+==========================================================================
+ RESULT: SUITE BUILT ✓  (do not rebuild after collection starts)
+ Next step: python 01_environment/fault_injection.py --self-test
+==========================================================================

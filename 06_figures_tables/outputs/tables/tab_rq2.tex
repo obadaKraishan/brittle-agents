@@ -1,0 +1,23 @@
+\begin{table*}[!t]
+\centering
+\caption{Reasoning versus instruct siblings on fault trials, paired within family by task, fault, and seed.}
+\label{tab:rq2}
+\footnotesize
+\setlength{\tabcolsep}{5pt}
+\begin{tabular}{llcccccc}
+\hline
+Outcome & Family & Reasoning & Instruct & $\Delta$ (points) & Clustered 95\% CI & OR & $p_{\text{Holm}}$ \\
+\hline
+detection & claude & 82.0\% & 88.2\% & $-6.2$ & $[-11.4, -1.2]$ & 0.61 & .042 \\
+detection & deepseek & 78.6\% & 82.5\% & $-4.0$ & $[-14.8, +5.0]$ & 0.78 & .434 \\
+detection & qwen & 67.5\% & 84.0\% & $-16.6$ & $[-27.2, -6.2]$ & 0.40 & .003 \\
+replanning & claude & 75.2\% & 70.8\% & $+4.3$ & $[-2.3, +11.8]$ & 1.25 & .417 \\
+replanning & deepseek & 74.6\% & 65.9\% & $+8.7$ & $[-5.5, +23.8]$ & 1.52 & .417 \\
+replanning & qwen & 92.6\% & 74.8\% & $+17.8$ & $[+11.3, +24.2]$ & 4.23 & $<$.001 \\
+recovery & claude & 66.5\% & 68.3\% & $-1.9$ & $[-9.0, +4.9]$ & 0.92 & 1.000 \\
+recovery & deepseek & 38.9\% & 42.1\% & $-3.2$ & $[-14.6, +8.6]$ & 0.88 & 1.000 \\
+recovery & qwen & 44.2\% & 46.6\% & $-2.5$ & $[-15.3, +10.1]$ & 0.91 & 1.000 \\
+\hline
+\end{tabular}
+\par\smallskip\scriptsize Negative $\Delta$ means the reasoning variant scored lower. OR and $p_{\text{Holm}}$ from task-clustered models on the matched pairs, Holm-corrected across families. Pooled over 450 pairs: detection $-9.3$ points ($p < .001$), replanning $+10.4$ points ($p < .001$), recovery $-2.4$ points ($p = .512$).
+\end{table*}
